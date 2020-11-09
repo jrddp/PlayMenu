@@ -26,10 +26,16 @@ def play_menu(path: Path = favorites_file):
     index, key = rofi.select("Play", favs.get_display_list(detail=2),
                              key1=("Alt+Shift+Return", "Play without shuffle\n"),
                              key2=("Alt+Return", "Play with shuffle\n"),
+                             key8=("Alt+p", "Search Spotify\n"),
                              key9=("Alt+X", "Remove from menu"))
 
     # escape key/exit was pressed
     if index == -1:
+        return
+
+    # search button pressed
+    if key == 8:
+        search_menu()
         return
 
     item = favs.items[index]
@@ -60,7 +66,7 @@ def play_menu(path: Path = favorites_file):
 def save_menu():
     from collections import OrderedDict
     from spotify_item import SpotifyItem
-    from util import my_playlists_file, notify_context, pango_escape
+    from util import my_playlists_file, notify_context
 
     rofi = Rofi(rofi_args=["-no-sort", "-i"])
 
@@ -75,7 +81,7 @@ def save_menu():
         track.uri).album.play()
     options[add_icon_to_str("Query context", "dialog-question")] = lambda: notify_context()
     options[add_icon_to_str("Remove song", "user-trash")] = track.unsave
-    index, key = rofi.select("Music", list(options.keys()), message=pango_escape(str(track)))
+    index, key = rofi.select("Music", list(options.keys()), message=rofi.escape(str(track)))
 
     # user escape/quit
     if index == -1:
@@ -93,7 +99,8 @@ def add_to_playlist_menu(playlist_path: Path, track: Track):
     pls.save_all_images()
 
     rofi = Rofi(rofi_args=["-no-sort", "-i"])
-    index, key = rofi.select(f"Add \"{track}\" to playlist", pls.get_display_list(detail=0), key9=("Alt-X", "Remove Playlist"))
+    index, key = rofi.select(f"Add \"{track}\" to playlist", pls.get_display_list(detail=0),
+                             key9=("Alt-X", "Remove Playlist"))
 
     # escape key/exit was pressed
     if index == -1:
@@ -109,7 +116,13 @@ def add_to_playlist_menu(playlist_path: Path, track: Track):
             pls.write(playlist_path)
         return
 
-
     if isinstance(playlist, Playlist):
         if prompt_menu(f"Add {track} to {playlist.name}?", no_first=False):
             playlist.add_item(track)
+
+
+def search_menu():
+    from spotify_search import play_search
+    r = Rofi()
+
+    play_search(r.text_entry("Play Song"))

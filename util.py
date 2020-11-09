@@ -23,8 +23,9 @@ def ensure_dir_exists(dir_path: Path):
         dir_path.mkdir()
 
 
-def pango_escape(s: str):
-    return s.replace('&', "&amp;")
+def get_uri_from_url(url):
+    spl = url.rsplit("/", 2)
+    return "spotify:{}:{}".format(spl[-2], spl[-1])
 
 
 def get_config():
