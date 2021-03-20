@@ -1,0 +1,115 @@
+configuration {
+	modi: "run,drun,window";
+	display-run: "command";
+	display-drun: "run";
+	display-window: "window";
+
+	terminal: "urxvt";
+
+	/* Displays modi in a bar */
+	sidebar-mode: true;
+
+	separator-style: "none";
+	hide-scrollbar: false;
+	window-format: "{w} {c} {t}";
+}
+
+* {
+
+	bg: #000000DD;
+	bg1: #00000000;
+	black: #000000;
+	gray: #b1b1b1;
+	accent: #FFFFFF;
+
+	spacing: 0;
+
+	background-color: transparent;
+	text-color: @gray;
+
+	font: "Bitstream Vera Sans Mono 14";
+
+}
+
+window {
+	transparency: "real";
+	fullscreen: true;
+	background-color: @bg;
+	border-radius: 0;
+}
+
+mainbox {
+	padding: 30% 30%;
+}
+
+inputbar {
+	margin: 0px 0px 20px 0px;
+	padding: 5px;
+	border-radius: 5px;
+	background-color: @bg1;
+	children: [prompt, textbox-prompt-colon, entry, case-indicator];
+}
+
+prompt {
+  text-color: @gray;
+}
+
+textbox-prompt-colon {
+  expand: false;
+  str: ":";
+  text-color: @accent;
+}
+
+entry {
+  margin: 0px 10px;
+}
+
+listview {
+  spacing: 5px;
+  dynamic: true;
+  scrollbar: true;
+}
+
+element {
+  padding: 5px;
+  text-color: @gray;
+  highlight: @accent;
+  border-radius: 3px;
+  background-color: @bg1;
+}
+
+element selected {
+  background-color: @gray;
+  text-color: @black;
+}
+
+element urgent, element selected urgent {
+  text-color: @accent;
+}
+
+element active, element selected active {
+  text-color: @accent;
+}
+
+message {
+  padding: 7px;
+  margin: -10px 0px 15px 0px;
+  border-radius: 5px;
+  border: 3px;
+  border-color: @gray;
+}
+
+button {
+	background-color: @bg1;
+	padding: 3px;
+}
+
+button selected {
+	padding: 7px;
+	background-color: @gray;
+	text-color: @black;
+}
+
+element-icon {
+    size:             1.4em ;
+}
