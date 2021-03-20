@@ -48,7 +48,7 @@ def gen_config(config):
 def get_spotify():
     global _spotify
     if not _spotify:
-        from spotipy import Spotify, SpotifyOAuth, SpotifyClientCredentials
+        from spotipy import Spotify, SpotifyOAuth
 
         scopes = {"user-read-playback-state", "user-modify-playback-state", "user-follow-modify", "user-library-read",
                   "user-library-modify", "user-modify-playback-state", "playlist-modify-public",
